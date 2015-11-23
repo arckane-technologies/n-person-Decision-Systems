@@ -1,0 +1,112 @@
+% 
+% BASIC DEFINITIONS
+%
+\section{Basic Definitions}\label{basic definitions}
+
+One may define a n-person decision system as a collection of \textbf{decisions}, \textbf{members}, \textbf{ideologies} and a set of 3 abstract functions called the \textbf{decision system}, the first abstract function $\tau(a)$ will determine the ease at which decisions are taken and the second and third functions $\phi(a)$ and $\pi_{t}(x, y)$ determine the initial and future changes on the capacity of members to influenciate over the decisions. This functions are considered abstract since the actual "implementation" of these will change the attributes and characteristics of the n-person decision system.
+
+%% DEFINITIONS OF STATIC DECISION SYSTEMS
+\subsection{Definitions of Static Decision Systems}
+
+% STATIC: Members
+\subsubsection{Members} 
+
+A member is defined as a tuple $m_{i}=<KB, infl>$ where $KB$ is any \textbf{Knowledge Base} and $infl\in\mathbb{R}$ also known as the member's \textbf{influence value}. The set $M = \{m_{1} \ldots m_{n}\}$ of all members in the n-person decision system is called the \textbf{community}.
+
+We also define for utility the functions $KB(m)$ and $infl(m)$ which extract the first and second element of the member's tuple respectively.
+
+% STATIC: Decisions
+\subsubsection{Decisions} 
+
+A decision is defined as a tuple $d_{i}=<p,\tau(a)>$ where $p$ is a \textbf{logic proposition} and $\tau(a)$ is the abstract function in the \textbf{decision system} which gives the decision's \textbf{threshold value} from some n-tuple $a$, the domain of $\tau$ is known as the arguments of the threshold. Also $\tau$ can be taken as a function of arity-n for some n amount of arguments that may change depending on the concrete decision system. Tau's type signature may look like this:
+
+$$\tau \colon A_{tr} \mapsto \mathbb{R}$$
+
+We will also define the set of all possible decisions $D = \{d_{1} \ldots d_{n} \}$ and the utility functions $p(d)$ and $threshold(d)$ similarly to what we did with the members.
+
+% STATIC: Decision Entailment
+\subsubsection{Decision Entailment} 
+
+It is said that a member votes in favor of a decision (denoted with the entailment symbol $m_{i} \models d_{j}$) iff his knowledge base entails the statement of the decision, more formally:
+
+$$m_{i} \models d_{j} \iff KB(m_{i}) \models p(d_{j})$$
+
+\paragraph{}
+
+Otherwise it is said that votes against, hence:
+
+$$m_{i} \not\models d_{j} \iff KB(m_{i}) \not\models p(d_{j})$$
+
+% STATIC: Ideology
+\subsubsection{Ideology} 
+
+An idology is defined as a tuple $idelogy_{i}=<KB, infl>$ similarly to a member. It is said that an $ideology$ exists in the universe of ideologies of the n-person decision system and that the ideology votes for a decision iff there exists a subcommunity in which every member votes for the decision. More formally, let $IDL = \{ideology_{1} \ldots ideology_{n}\}$ then:
+
+$$\exists d \in D (\exists ideology \in IDL (ideology \models d) \iff \exists M' \subseteq M \forall m \in M' (m \models d))$$
+
+\paragraph{}
+
+We will also add that that the influence of the ideology is given by the sum of influence of every member that shares the voting of a decision. Let $influenceSum(A) = \sum\limits_{a \in A} infl(a)$ and $M_{d}^{+} = \{\forall m \in M \colon m \models d\}$ then:
+
+$$infl_{d}(ideology) = influenceSum(M_{d}^{+})$$
+
+\paragraph{}
+
+And that $KB_{d}(ideology)$ by definition of ideology existance it is any knowledge base that entails the decision. 
+
+% STATIC: Decision Passing
+\subsubsection{Decision Passing} 
+
+It is said that a decision passes (denoted $d^{+}$) iff the sum of influence of all the members that votes for the decision is equal or greater to the threshold value of the decision.
+
+$$ d^{+} \iff influenceSum(M_{d}^{+}) \geq threshold(d)$$
+
+\paragraph{}
+
+Otherwise it is denoted $d^{-}$ if the decision is not passed by the n-person decision system, hence:
+
+$$ d^{-} \iff influenceSum(M_{d}^{+}) < threshold(d)$$
+
+\paragraph{}
+
+It is also denoted that a n-person decision system $DS$ passes a decision using the entailment symbol: $DS \models d$
+
+\paragraph{}
+
+One can intuitively see that depending on the \textbf{influence value} of the members, different members and ideologies will have a broader or shorter capacity of deciding in the system.
+
+% STATIC: Systems Equivalence
+\subsubsection{Systems Equivalence} 
+
+It is said that two decision systems are equivalent if for every decision passed in one, it is also passed in the other. Let $ES$ and $FS$ be two decision systems and $D(A)$ be the function that gives the universe of decisions of a decision system $A$, then:
+
+$$ ES \equiv FS \iff \forall d \in D(ES) \cap D(FS) (ES \models d \iff FS \models d) $$
+
+%% DEFINITIONS OF DYNAMIC DECISION SYSTEMS
+\subsection{Definitions of Dynamic Decision Systems}
+
+To completely model decision systems we must accept that the influence between members can be changed or transfered, and that for any given two different moments the knowledge base of any member can change, hence the change of ideologies and passing of decisions.
+
+% DYNAMIC: Introduction of Time
+\subsubsection{Introduction of Time}
+
+In a dynamic decision system a time $t$ will be introduced for every member, decision and ideology, for siplicity one must consider that for two different times in a non-deterministic way one member may change its KB, hence the set $IDL$ of ideologies may change, also the set of decisions to be decided is given for every time.
+
+% DYNAMIC: Influence Function
+\subsubsection{Influence Function} 
+
+In the set of abstract functions, $\phi(a)$ is the function that gives the initial $infl$ value of each member at $t_{0}$. The domain of $\phi$ is known as the arguments of the influence.
+
+$$\phi \colon A_{infl} \mapsto \mathbb{R}$$
+
+% DYNAMIC: Influence Change Function
+\subsubsection{Influence Change Function}
+
+In the set of abstract functions, $\pi_{t}(x, y)$ is the function that given any pair of influences gives a new pair of influences. 
+
+$$\pi \colon \mathbb{R}\times\mathbb{R} \mapsto \mathbb{R}\times\mathbb{R}$$
+
+% DYNAMIC: Modeling Dynamic Decision Systems
+\subsubsection{Modeling Dynamic Decision Systems}
+
+Adding the initial influence and the way it can be transfered we can model decision systems like economic systems, where influence is a kind of currency and the actors of this economic system try to adquire or transfer the currency with the personal objective of passing the decisions their ideology entails.
